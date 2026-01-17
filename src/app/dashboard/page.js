@@ -41,7 +41,6 @@ export default function DashboardPage() {
   const [message, setMessage] = useState("");
   const [certMessage, setCertMessage] = useState("");
 
-  // Auth check
   useEffect(() => {
     const checkAuth = async () => {
       const {
@@ -77,7 +76,6 @@ export default function DashboardPage() {
     router.replace("/login");
   }
 
-  // Load projects
   const loadProjects = async () => {
     setProjectsLoading(true);
 
@@ -90,7 +88,6 @@ export default function DashboardPage() {
     setProjectsLoading(false);
   };
 
-  // Load certificates
   const loadCertificates = async () => {
     setCertificatesLoading(true);
 
@@ -112,7 +109,6 @@ export default function DashboardPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  // PROJECT SUBMIT
   async function handleSubmit(e) {
     e.preventDefault();
     setProjectLoading(true);
@@ -212,7 +208,6 @@ export default function DashboardPage() {
     }
   }
 
-  // CERTIFICATE SUBMIT
   async function handleCertificateSubmit(e) {
     e.preventDefault();
     setCertLoading(true);
@@ -425,6 +420,67 @@ export default function DashboardPage() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* CERTIFICATE FORM (THIS WAS MISSING) */}
+      <div className="border p-6 rounded-xl">
+        <h2 className="text-xl font-semibold mb-4">
+          {editingCertId ? "Edit Certificate" : "Add Certificate"}
+        </h2>
+
+        <form onSubmit={handleCertificateSubmit} className="space-y-4">
+          <input
+            placeholder="Certificate title"
+            value={certForm.title}
+            onChange={(e) =>
+              setCertForm({ ...certForm, title: e.target.value })
+            }
+            className="w-full border px-3 py-2 rounded"
+            required
+          />
+
+          <input
+            placeholder="Issuer"
+            value={certForm.issuer}
+            onChange={(e) =>
+              setCertForm({ ...certForm, issuer: e.target.value })
+            }
+            className="w-full border px-3 py-2 rounded"
+          />
+
+          <input
+            type="date"
+            value={certForm.issued_date}
+            onChange={(e) =>
+              setCertForm({ ...certForm, issued_date: e.target.value })
+            }
+            className="w-full border px-3 py-2 rounded"
+          />
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              setCertForm({ ...certForm, image: e.target.files?.[0] || null })
+            }
+            className="w-full border px-3 py-2 rounded"
+          />
+
+          <button
+            disabled={certLoading}
+            className="bg-black text-white px-4 py-2 rounded"
+          >
+            {certLoading
+              ? "Saving..."
+              : editingCertId
+                ? "Update Certificate"
+                : "Add Certificate"}
+          </button>
+
+          {certMessage && (
+            <p className="text-sm text-gray-600">{certMessage}</p>
+          )}
+        </form>
       </div>
 
       {/* CERTIFICATES LIST */}
