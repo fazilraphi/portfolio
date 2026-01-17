@@ -57,7 +57,7 @@ export default function HomeHero() {
           <div className="relative">
             <div className="absolute inset-0 rounded-full bg-cyan-500 blur-3xl opacity-30" />
             <img
-              src="/your-photo.jpg" // replace with your image path
+              src="/imu.jpg" // replace with your image path
               alt="Profile"
               className="relative w-72 h-72 object-cover rounded-full border border-white/20"
             />
