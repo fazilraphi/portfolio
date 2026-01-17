@@ -1,7 +1,6 @@
 "use client";
 
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import { Download } from "lucide-react";
 
 export default function ResumePage() {
@@ -18,9 +17,8 @@ export default function ResumePage() {
             </p>
           </div>
 
-          {/* Download Button */}
           <a
-            href="/public/FazilPRaphiresume.pdf"
+            href="/FazilPRaphiResume.pdf"
             download
             className="mt-6 md:mt-0 inline-flex items-center gap-2 px-5 py-3 bg-cyan-500 text-black rounded-lg font-medium hover:bg-cyan-600 transition"
           >
@@ -29,10 +27,9 @@ export default function ResumePage() {
           </a>
         </div>
 
-        {/* Resume Viewer */}
         <div className="w-full h-[80vh] bg-black/30 border border-white/10 rounded-xl overflow-hidden">
           <iframe
-            src="/public/FazilPRaphiresume.pdf"
+            src="/FazilPRaphiResume.pdf"
             className="w-full h-full"
             title="Resume Viewer"
           />
