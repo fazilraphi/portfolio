@@ -20,7 +20,7 @@ export default function ResumePage() {
 
           {/* Download Button */}
           <a
-            href="/FazilPRaphiresume.pdf"
+            href="/public/FazilPRaphiresume.pdf"
             download
             className="mt-6 md:mt-0 inline-flex items-center gap-2 px-5 py-3 bg-cyan-500 text-black rounded-lg font-medium hover:bg-cyan-600 transition"
           >
@@ -32,7 +32,7 @@ export default function ResumePage() {
         {/* Resume Viewer */}
         <div className="w-full h-[80vh] bg-black/30 border border-white/10 rounded-xl overflow-hidden">
           <iframe
-            src="/FazilPRaphiresume.pdf"
+            src="/public/FazilPRaphiresume.pdf"
             className="w-full h-full"
             title="Resume Viewer"
           />
