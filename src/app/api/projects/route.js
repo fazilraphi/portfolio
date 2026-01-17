@@ -1,14 +1,21 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY,
-);
+function getSupabaseAdmin() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    throw new Error("Missing Supabase environment variables");
+  }
+
+  return createClient(url, key);
+}
 
 // CREATE project
 export async function POST(req) {
   try {
+    const supabase = getSupabaseAdmin();
     const formData = await req.formData();
 
     const title = formData.get("title");
@@ -50,7 +57,8 @@ export async function POST(req) {
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error(err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
@@ -58,8 +66,8 @@ export async function POST(req) {
 // UPDATE project
 export async function PATCH(req) {
   try {
-    const body = await req.json();
-    const { id, title, description, live_url, github_url } = body;
+    const supabase = getSupabaseAdmin();
+    const { id, title, description, live_url, github_url } = await req.json();
 
     const { error } = await supabase
       .from("projects")
@@ -71,7 +79,8 @@ export async function PATCH(req) {
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error(err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
@@ -79,6 +88,7 @@ export async function PATCH(req) {
 // DELETE project
 export async function DELETE(req) {
   try {
+    const supabase = getSupabaseAdmin();
     const { id } = await req.json();
 
     const { error } = await supabase.from("projects").delete().eq("id", id);
@@ -88,7 +98,8 @@ export async function DELETE(req) {
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error(err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

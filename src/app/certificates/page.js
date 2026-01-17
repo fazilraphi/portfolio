@@ -3,8 +3,16 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+
 import CertificateCard from "@/components/ui/certificate-card";
+import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+
+export async function POST(req) {
+  const supabase = getSupabaseAdmin();
+
+  // now use supabase safely here
+}
+
 
 export default function CertificatesPage() {
   const [certificates, setCertificates] = useState([]);

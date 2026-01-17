@@ -1,15 +1,21 @@
-
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY,
-);
+function getSupabaseAdmin() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    throw new Error("Missing Supabase environment variables");
+  }
+
+  return createClient(url, key);
+}
 
 // CREATE certificate
 export async function POST(req) {
   try {
+    const supabase = getSupabaseAdmin();
     const formData = await req.formData();
 
     const title = formData.get("title");
@@ -50,7 +56,8 @@ export async function POST(req) {
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error(err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
@@ -58,6 +65,7 @@ export async function POST(req) {
 // UPDATE certificate
 export async function PATCH(req) {
   try {
+    const supabase = getSupabaseAdmin();
     const { id, title, issuer, issued_date } = await req.json();
 
     const { error } = await supabase
@@ -70,7 +78,8 @@ export async function PATCH(req) {
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error(err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
@@ -78,6 +87,7 @@ export async function PATCH(req) {
 // DELETE certificate
 export async function DELETE(req) {
   try {
+    const supabase = getSupabaseAdmin();
     const { id } = await req.json();
 
     const { error } = await supabase.from("certificates").delete().eq("id", id);
@@ -87,7 +97,8 @@ export async function DELETE(req) {
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error(err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
