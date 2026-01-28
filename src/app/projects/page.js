@@ -5,13 +5,12 @@ import { supabase } from "@/lib/supabaseClient";
 
 import { useToast } from "@/lib/use-toast";
 import ToastContainer from "@/components/ui/toast-container";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import ProjectCard from "@/components/ui/project-card";
+import Footer from "@/components/layout/Footer";
+import PageShell from "@/components/layout/PageShell";
 
 export default function ProjectsPage() {
   const { toast, showToast, clearToast } = useToast();
-console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -35,11 +34,11 @@ console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
   }, []);
     
  return (
-   <div className="min-h-screen bg-gradient-to-br from-[#0b1f26] via-[#0f2f3a] to-[#0b1f26]">
-     <Navbar />
-
-     <main className="mx-auto max-w-6xl px-4 sm:px-6 py-12 md:py-20 pt-24">
-       <h1 className="text-4xl font-bold mb-10 text-white">Projects</h1>
+   <>
+     <PageShell>
+       <h1 className="text-3xl sm:text-4xl font-bold mb-8 sm:mb-10 text-white">
+         Projects
+       </h1>
 
        {loading && <p className="text-gray-400">Loading projects...</p>}
 
@@ -47,7 +46,7 @@ console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
          <p className="text-gray-400">No projects added yet.</p>
        )}
 
-       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
          {projects.map((project) => (
            <ProjectCard
              key={project.id}
@@ -60,10 +59,11 @@ console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
            />
          ))}
        </div>
-     </main>
+     </PageShell>
 
      <ToastContainer toast={toast} clearToast={clearToast} />
-   </div>
+     <Footer />
+   </>
  );
 
 }

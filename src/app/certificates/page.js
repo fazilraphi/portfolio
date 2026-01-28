@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import Navbar from "@/components/layout/Navbar";
 
 import CertificateCard from "@/components/ui/certificate-card";
+import PageShell from "@/components/layout/PageShell";
+import Footer from "@/components/layout/Footer";
 
 
 export default function CertificatesPage() {
@@ -26,11 +27,16 @@ export default function CertificatesPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0b1f26] via-[#0f2f3a] to-[#0b1f26]">
-      <Navbar />
-
-      <main className="mx-auto max-w-6xl px-4 py-12 pt-24">
-        <h1 className="text-4xl font-bold mb-10 text-white">Certificates</h1>
+    <>
+      <PageShell>
+        <div className="flex flex-col gap-3 mb-8 sm:mb-10">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white">
+            Certificates
+          </h1>
+          <p className="text-white/65 max-w-2xl">
+            Verified achievements, credentials, and milestones.
+          </p>
+        </div>
 
         {loading && <p className="text-gray-400">Loading...</p>}
 
@@ -38,12 +44,13 @@ export default function CertificatesPage() {
           <p className="text-gray-400">No certificates added yet.</p>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {certificates.map((cert) => (
             <CertificateCard key={cert.id} certificate={cert} />
           ))}
         </div>
-      </main>
-    </div>
+      </PageShell>
+      <Footer />
+    </>
   );
 }
